@@ -12,6 +12,8 @@ class DemoSource {
   late final Timer _timer;
 
   // климат: база + дрейф AR(1)
+  // базовые температуры комнат; мутируются дрейфом в _tick()
+  // ignore: prefer_final_fields
   double _tLiving = 22.5, _tBedroom = 20.0, _tKitchen = 24.0;
   double _hLiving = 47, _hBedroom = 52, _hKitchen = 44;
   double _walkL = 0, _walkB = 0, _walkK = 0;

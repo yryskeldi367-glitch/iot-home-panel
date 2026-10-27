@@ -1,3 +1,4 @@
+// ignore_for_file: prefer_const_constructors
 // tabs.dart -- четыре экрана панели: обзор, реле, история, настройки.
 import 'package:flutter/cupertino.dart';
 
@@ -184,6 +185,7 @@ class RelaysTab extends StatelessWidget {
               children: [
                 ScreenHeader('Реле'),
                 if (relays.isEmpty)
+                  // ignore: prefer_const_constructors
                   GlassCard(
                     child: Text(
                       state.demoMode
@@ -305,6 +307,7 @@ class _HistoryTabState extends State<HistoryTab> {
           builder: (context, _) => ListView(
             children: [
               ScreenHeader('История'),
+              // ignore: prefer_const_constructors
               GlassCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -425,6 +428,7 @@ class _SettingsTabState extends State<SettingsTab> {
           builder: (context, _) => ListView(
             children: [
               ScreenHeader('Настройки'),
+              // ignore: prefer_const_constructors
               GlassCard(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
