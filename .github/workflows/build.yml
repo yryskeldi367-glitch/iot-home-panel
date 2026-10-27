@@ -1,0 +1,52 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  android:
+    name: Android APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.24.5
+          cache: true
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter build apk --release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: home-panel-android-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+  windows:
+    name: Windows EXE
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.24.5
+          cache: true
+      - run: flutter config --enable-windows-desktop
+      - run: flutter pub get
+      - run: flutter analyze
+      - run: flutter build windows --release
+      - name: Archive build
+        shell: pwsh
+        run: Compress-Archive -Path "build/windows/x64/runner/Release/*" -DestinationPath "home-panel-windows.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: home-panel-windows-exe
+          path: home-panel-windows.zip
